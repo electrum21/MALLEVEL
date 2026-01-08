@@ -1,0 +1,25 @@
+{
+    "statistics": {
+        "start_time": "03 February 2023 16:20:16",
+        "end_time": "03 February 2023 16:20:16",
+        "file_count": 1,
+        "file_dangerous": 0,
+        "file_safe": 1,
+        "malicious_files": []
+    },
+    "files": {
+        "CSIT_Mid-Internship_Sharing.pdf": {
+            "secured_file_name": "CSIT_Mid-Internship_Sharing.pdf",
+            "verdict": "SAFE",
+            "signature_detection_score": 0,
+            "heuristics": null,
+            "prediction": null,
+            "file_type": "PDF",
+            "file_size": 10186.76,
+            "md5": "979599a5e951d607e45ea3cd9e679462",
+            "sha1": "fb418a8f91091d4300d8d281c315e096f6d8ca38",
+            "sha256": "b4713845dae3ab09977dd23ab5449c6440cf280163667450b9740a3782b921e8",
+            "reasons": []
+        }
+    }
+}

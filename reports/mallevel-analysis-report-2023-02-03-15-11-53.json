@@ -1,0 +1,25 @@
+{
+    "statistics": {
+        "start_time": "03 February 2023 15:11:53",
+        "end_time": "03 February 2023 15:11:55",
+        "file_count": 1,
+        "file_dangerous": 0,
+        "file_safe": 1,
+        "malicious_files": []
+    },
+    "files": {
+        "MSTeamsSetup_c_l_.exe": {
+            "secured_file_name": "MSTeamsSetup_c_l_.exe",
+            "verdict": "SAFE",
+            "signature_detection_score": 0,
+            "heuristics": "SAFE",
+            "prediction": "SAFE",
+            "file_type": "EXE",
+            "file_size": 1390.32,
+            "md5": "092bff0405ab418fe22c565e231be2ba",
+            "sha1": "8aef2b7d83b3d5ae55b24f25ab6621bb2dea9287",
+            "sha256": "156cafa6da98a57e481aab74ef748726bd4dce2912536fb59e65d9a57a3ae7a7",
+            "reasons": [],
+        }
+    }
+}

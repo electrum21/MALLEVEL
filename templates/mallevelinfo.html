@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{% block title %}MALLEVEL: How It Works{% endblock %}
+
+{% block header %}
+<h1 class="w3-center"><b>How MALLEVEL Works</b></h1>
+{% endblock %}
+
+{% block content %}
+<div class="w3-container">
+  <br>
+  <div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-heading w3-deep-orange">
+        <table style="width:100%;">
+          <tr>
+            <td>
+              <h4 class="panel-title">
+                <a data-toggle="collapse" href="#collapse_flow"><h3>The Workflow</h3></a>
+              </h4>
+            </td>
+            <td><h4>&nbsp;</h4></td>
+          </tr>
+        </table>
+      </div>
+      <div id="collapse_flow" class="panel-collapse collapse">
+        <div class="panel-body w3-white">
+          <img src="/static/img/avml_flow.png" style="width:100%;"/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-heading w3-deep-orange">
+        <table style="width:100%;">
+          <tr>
+            <td>
+              <h4 class="panel-title">
+                <a data-toggle="collapse" href="#collapse_scoring"><h3>Scoring System</h3></a>
+              </h4>
+            </td>
+            <td><h4>&nbsp;</h4></td>
+          </tr>
+        </table>
+      </div>
+      <div id="collapse_scoring" class="panel-collapse collapse">
+        <div class="panel-body">
+          <table class="w3-table table-bordered w3-white grey-border w3-center">
+            <tr>
+              <th></th>
+              <th><b>Loki (Signature-Based Detection)</b></th>
+              <th><b>DeepMalwareDetector (Model Prediction)</b></th>
+            </tr>
+            <tr>
+              <td><b>Verdict</b></td>
+              <td><b>Score</b></td>
+              <td><b>Prediction</b></td>
+            </tr>
+            <tr class="w3-red">
+              <td>DANGEROUS <i class="fa fa-thumbs-down" aria-hidden="true"></i></td>
+              <td>>= 100</td>
+              <td>>= 75%</td>
+            </tr>
+            <tr class="w3-deep-orange">
+              <td>WARNING <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></td>
+              <td>>= 60</td>
+              <td>>= 50%</td>
+            </tr>
+            <tr class="w3-blue">
+              <td>NOTICE <i class="fa fa-info-circle" aria-hidden="true"></i></td>
+              <td>>= 40</td>
+              <td>>= 25%</td>
+            </tr>
+            <tr class="w3-green">
+              <td>SAFE <i class="fa fa-thumbs-up" aria-hidden="true"></i></td>
+              <td>< 40</td>
+              <td>< 25%</td>
+            </tr>
+        </table>
+        </div>
+        <div class="panel-footer">
+          The analysis results will be displayed in the order of verdicts, from dangerous to safe. 
+          <br>(Loki's scoring takes precedence over DeepMalwareDetector's prediction)
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-heading w3-deep-orange">
+        <table style="width:100%;">
+          <tr>
+            <td>
+              <h4 class="panel-title">
+                <a data-toggle="collapse" href="#collapse_sample"><h3>Sample Results</h3></a>
+              </h4>
+            </td>
+            <td><h4>&nbsp;</h4></td>
+          </tr>
+        </table>
+      </div>
+      <div id="collapse_sample" class="panel-collapse collapse">
+        <div class="panel-body w3-white">
+          <table class="w3-table table-bordered w3-white grey-border w3-center">
+            <tr>
+              <th style="width:25%;">File Example</th>
+              <th>Loki Score</th>
+              <th>Loki Verdict</th>
+              <th>DeepMD Score</th>
+              <th>DeepMD Verdict</th>
+              <th>Final Verdict</th>
+            </tr>
+            <tr>
+              <td>safe.txt <br>(Non PE)</td>
+              <td class="w3-green">0</td>
+              <td class="w3-green">SAFE</td>
+              <td colspan="2">NA - ML only supports PEs</td>
+              <td class="w3-green">SAFE</td>
+            </tr>
+            <tr>
+              <td>eicar.com.txt <br>(Non PE)</td>
+              <td class="w3-blue">40</td>
+              <td class="w3-blue">NOTICE</td>
+              <td colspan="2">NA - ML only supports PEs</td>
+              <td class="w3-blue">NOTICE</td>
+            </tr>
+            <tr>
+              <td>bandicam.dll <br>(PE)</td>
+              <td class="w3-green">0</td>
+              <td class="w3-green">SAFE</td>
+              <td class="w3-green">18.19%</td>
+              <td class="w3-green">SAFE</td>
+              <td class="w3-green">SAFE</td>
+            </tr>
+            <tr>
+              <td>smb-e7_udot9.tmp <br>(PE)</td>
+              <td class="w3-deep-orange">70</td>
+              <td class="w3-deep-orange">WARNING</td>
+              <td colspan="2">NA - Already Detected; No Point Predicting</td>
+              <td class="w3-deep-orange">WARNING</td>
+            </tr>
+            <tr>
+              <td>smb-37n0gip7.tmp <br>(PE)</td>
+              <td class="w3-green">0</td>
+              <td class="w3-green">SAFE</td>
+              <td class="w3-red">87.48%</td>
+              <td class="w3-red">DANGEROUS</td>
+              <td class="w3-red">DANGEROUS</td>
+            </tr>
+            <tr>
+              <td>wannacry.exe <br>(PE)</td>
+              <td class="w3-red">140</td>
+              <td class="w3-red">DANGEROUS</td>
+              <td colspan="2">NA - Already Detected; No Point Predicting</td>
+              <td class="w3-red">DANGEROUS</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+  // Script to open and close sidebar
+  function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+  }
+
+  function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+  }
+
+
+  </script>
+{% endblock %}

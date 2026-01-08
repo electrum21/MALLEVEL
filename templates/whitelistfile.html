@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}MALLEVEL: Whitelist Files{% endblock %}
+
+{% block header %}
+<h1 class="w3-center"><b>Whitelist Files</b></h1>
+{% endblock %}
+
+{% block content %}
+<div class="w3-container">
+  <br>
+  <h4>Whitelist known good files so the agents will no longer send them for scanning.<br></h4>
+  <form action = "/whitelistfile" method = "POST" enctype = "multipart/form-data" class="form-group">
+    <br>
+      <img class="whitelistimage" src="/static/img/whitelist.jpg"/>
+      <br>
+      <table style="width:100%;">
+        <tr>
+          <td><input type = "file" name = "File" class="formbutton" multiple/></td>
+          <td><input type = "submit" class="submit" name = "submit" class="formbutton"/></td>
+        </tr>
+      </table>
+  </form>
+  <p>* Files released from quarantine will be automatically whitelisted.</p>
+</div>
+<div class="display">
+  {% if new_hashes %}
+  {% if new_hashes.length == 1 %}
+  <p>The file hash '{{new_hashes[0]}}' has been successfully whitelisted:</p>
+  {% else %}
+  <p class="message">The following file hashes have been successfully whitelisted:</p>
+  <ol class="message">
+    {% for new_hash in new_hashes %}
+    <li>{{new_hash}}</li>
+    {% endfor %}
+  </ol>
+  {% endif %}
+  {% endif %}
+  {% if existed_hashes %}
+  {% if existed_hashes.length == 1 %}
+  <p>The hash you have provided has been whitelisted previously.</p>
+  {% else %}
+  <p class="error">The following file hashes have been whitelisted previously:</p>
+  <ol class="error">
+    {% for existed_hash in existed_hashes %}
+    <li>{{existed_hash}}</li>
+    {% endfor %}
+  </ol>
+  {% endif %}
+  {% endif %}
+  {% if error %}
+  <p class="error">{{error}}</p>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+  // Script to open and close sidebar
+  function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+  }
+
+  function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+  }
+
+
+  </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+{% endblock %}

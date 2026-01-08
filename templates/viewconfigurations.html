@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}MALLEVEL: Endpoint Configurations{% endblock %}
+
+{% block header %}
+<h1 class="w3-center"><b>Endpoint Configurations</b></h1>
+{% endblock %}
+
+{% block content %}
+<div class="w3-container">
+  <br>
+    <h4><b>Directories Monitored on Endpoints (Every {{monitor_interval}} seconds):</b></h4>
+    <table class="directories" style="width:100%;">
+      <tr>
+        <th style="width:80%;">Directory (C:\Users\[username]\...)</th>
+        <th>Remove</th>
+      </tr>
+      {% for directory in monitored_directories %}
+      <tr>
+        <td>{{directory}}</td>
+        <td><form action="{{url_for('delete_directory', directory = directory)}}" method="POST"><input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to remove {{directory}} from the monitored directories?');"></form></td>
+      </tr>
+      {% endfor %}
+      <tr>
+        <td colspan="2">
+          <form action = "/add_directory" method = "POST" enctype = "multipart/form-data">
+              <label for="directory">Add Directory: </label>
+              <input type = "text" name = "directory"/>
+              <input type = "submit" name = "submit" class="btn btn-success"/>
+          </form>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <form action = "{{url_for('change_interval', old_interval = monitor_interval)}}" method = "POST" enctype = "multipart/form-data">
+              <label for="interval">Update Monitor Interval (secs): </label>
+              <input type = "number" name = "interval" min="0" value="{{monitor_interval}}"/>
+              <input type = "submit" name = "submit" class="btn btn-success"/>
+          </form>
+        </td>
+      </tr>
+    </table>
+    <br><br>
+    <div class="display">
+      {% if error %}
+      <p class="error">{{error}}</p>
+      {% endif %}
+    </div>
+    <br>
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+  // Script to open and close sidebar
+  function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+  }
+
+  function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+  }
+
+  </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+
+
+{% endblock %}

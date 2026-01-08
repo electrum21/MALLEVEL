@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}MALLEVEL: View Existing Users{% endblock %}
+<!-- This login page is the pathway to view signatures, update signatures, whitelist files, and view the admin dashboard -->
+
+{% block header %}
+<h1 class="w3-center"><b>View Users</b></h1>
+{% endblock %}
+
+{% block content %}
+<div class="w3-container">
+  <br>
+  <table class="w3-table-all table-bordered">
+    <thead>
+      <tr class="w3-blue">
+        <th>User</th>
+        <th>API Key</th>
+        <th>Windows Hostname</th>
+        <th>Windows Username</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for user, api_key_info in users_info.items() %}
+      <tr>
+        <td>{{ user }}</td>
+        <td>{{ api_key_info.api_key }}</td>
+        <td>{{ api_key_info.hostname }}</td>
+        <td>{{ api_key_info.username }}</td>
+        <td><form action="{{url_for('delete_user', username = user)}}" method="POST"><input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to remove user {{user}}?');"></form></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <br>
+  <p>* The Windows Hostname and Windows Username will only appear after a user's agent has connected to the server.</p>
+</div>
+<div class="display">
+  {% if error %}
+  <p class="error">{{error}}</p>
+  {% endif %}
+  {% if message %}
+  <p>{{message}}</p>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+  // Script to open and close sidebar
+  function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+  }
+
+  function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+  }
+
+
+  </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+{% endblock %}

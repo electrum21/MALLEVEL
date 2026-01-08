@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}MALLEVEL: Integration with Splunk{% endblock %}
+
+{% block header %}
+<h1 class="w3-center"><b>MALLEVEL-Splunk Integration</b></h1>
+{% endblock %}
+
+{% block content %}
+<div class="w3-container">
+  <div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-heading w3-blue">
+        <table style="width:100%;">
+          <tr>
+            <td>
+              <h4 class="panel-title">
+                <a data-toggle="collapse" href="#collapse_flow_1"><h3>MALLEVEL Operational Dashboard</h3></a>
+              </h4>
+            </td>
+            <td><h4>&nbsp;</h4></td>
+          </tr>
+        </table>
+      </div>
+      <div id="collapse_flow_1" class="panel-collapse collapse">
+        <div class="panel-body">
+          <div>
+            <p>This dashboard provides detailed statistics about the operations of the MALLEVEL Server. At one glance, you are able to know</p>
+            <ul>
+              <li>how many scans have been executed</li>
+              <li>how many signature updates took place</li>
+              <li>the summary of the recent scan results</li>
+            </ul>
+          </div>
+          <img src="/static/img/MALLEVEL Splunk Statistics Dashboard.png" style="width:100%;"/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-heading w3-blue">
+        <table style="width:100%;">
+          <tr>
+            <td>
+              <h4 class="panel-title">
+                <a data-toggle="collapse" href="#collapse_flow_2"><h3>MALLEVEL Scan Results Dashboard</h3></a>
+              </h4>
+            </td>
+            <td><h4>&nbsp;</h4></td>
+          </tr>
+        </table>
+      </div>
+      <div id="collapse_flow_2" class="panel-collapse collapse">
+        <div class="panel-body">
+          <div>
+            <p>This dashboard provides detailed information about all the files scanned by MALLEVEL. At one glance, you are able to know</p>
+            <li>how many unique files were submitted and scanned</li>
+            <li>how many unique files were processed by Machine Learning</li>
+            <li>the proportion of unique files scanned, based on their verdicts (Dangerous, Warning, Notice, Safe)</li>
+            <li>the proportion of unique files scanned, based on their types (EXE, PHP, etc.)</li>
+            <li>the information about detected and predicted malicious files</li>
+          </div>
+          <img src="/static/img/MALLEVEL Splunk Scan Results Dashboard.png" style="width:100%;"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>   
+{% endblock %}
+
+{% block scripts %}
+  <script>
+  // Script to open and close sidebar
+  function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+  }
+
+  function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+  }
+
+
+  </script>
+{% endblock %}

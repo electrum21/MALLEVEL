@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}MALLEVEL: Login to Access Restricted Views{% endblock %}
+<!-- This login page is the pathway to view signatures, update signatures, whitelist files, and view the admin dashboard -->
+
+{% block header %}
+<h1 class="w3-center"><b>Login</b></h1>
+{% endblock %}
+
+{% block content %}
+<div class="w3-container">
+  <br>
+  {% if message %}
+  <div class="w3-panel w3-green">
+    <h4>You have successfully changed your password. Please re-authenticate with your new password.</h4>
+  </div>
+  {% else %}
+  <h4>Please login in order to access restricted pages.</h4>
+  {% endif %}
+  <form action = "/login" method = "POST" enctype = "multipart/form-data" class="form-group">
+    <br>
+    <img class="loginimage" src="/static/img/login.png"/>
+    <br>
+      <table style="width:100%;">
+        <tr>
+          <td>
+            <label for="username">Username:</label>
+            <input type = "text" name = "username" required/>
+          </td>
+          <td>
+            <label for="password">Password:</label>
+            <input type = "password" name = "password" required/>
+          </td>
+          <td>
+            <input type = "submit" class="submit" name = "submit" class="formbutton"/>
+          </td>
+      </table>
+      <input type="hidden" name="next" value="{{ request.args.get('next', '') }}"/>
+  </form>
+</div>
+<div class="display">
+  <p class="error">{{error}}</p>
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+  // Script to open and close sidebar
+  function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+  }
+
+  function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+  }
+
+
+  </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+{% endblock %}

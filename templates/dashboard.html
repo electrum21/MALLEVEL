@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}MALLEVEL: Dashboard{% endblock %}
+
+{% block header %}
+<h1 class="w3-center"><b>Dashboard</b></h1>
+{% endblock %}
+
+{% block content %}
+<div class="w3-container">
+  <br>
+  {% if no_of_unique_files_scanned != None %}
+      <h4><b>Overview:</b></h4>
+      <table style="width:100%; text-align:center;" class="dashboard-table">
+        <tr>
+          <td style="width:50%">No. of Files Scanned</td>
+          <td style="width:50%">No. of Files Processed by ML</td>
+        </tr>
+        <tr>
+          <td>
+            <b style="font-size:3em;">183</b>
+          </td>
+          <td>
+            <b style="font-size:3em;">94</b>
+          </td>
+        </tr>
+        </table>
+        <table style="width:100%; text-align:center;" class="dashboard-table">
+        <tr>
+          <td style="width:50%">
+            Classification of Files Scanned by Verdict
+          </td>
+          <td style="width:50%">
+            Classification of Files Scanned by Type
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <canvas id="verdict_chart" style="width:100%;max-width:400px;"></canvas>
+          </td>
+          <td>
+            <canvas id="type_chart" style="width:80%;max-width:400px;"></canvas>
+          </td>
+        </tr>
+        </table>
+    <br><br>
+    {% endif %}
+    <div class="display">
+      {% if error %}
+      <p class="error">{{error}}</p>
+      {% endif %}
+    </div>
+    <br>
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+  // Script to open and close sidebar
+  function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+  }
+
+  function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+  }
+
+  var verdicts = {{file_verdicts|tojson}};
+  var verdict_chart_xValues = ["SAFE", "DANGEROUS"];
+  var verdict_chart_yValues = [123, 60];
+  var verdict_chart_barColors = ["green", "red"];
+
+  new Chart("verdict_chart", {
+    type: "pie",
+    data: {
+      labels: verdict_chart_xValues,
+      datasets: [{
+        backgroundColor: verdict_chart_barColors,
+        data: verdict_chart_yValues
+      }]
+    },
+    options: {
+    }
+  });
+
+  var types = {{file_types|tojson}};
+  var type_chart_xValues = Object.keys(types);
+  var type_chart_yValues = Object.values(types);
+  var type_chart_barColors = ["#b91d47","#00aba9","#2b5797","#e8c3b9","#1e7145"];
+
+  new Chart("type_chart", {
+  type: "pie",
+  data: {
+    labels: type_chart_xValues,
+    datasets: [{
+      backgroundColor: type_chart_barColors,
+      data: type_chart_yValues
+    }]
+  },
+  options: {
+  }
+});
+
+  </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+
+
+{% endblock %}
