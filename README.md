@@ -1,5 +1,5 @@
 # MALLEVEL
-MALLEVEL is an integrated anti-malware agent-server solution developed to provide enhanced security for Windows endpoints using a combination of signature-based detection and machine-learning analysis, based off the repositoriies [Loki](https://github.com/Neo23x0/Loki) and MDML (no longer available).
+MALLEVEL is an integrated anti-malware agent-server solution developed to provide enhanced security for Windows endpoints using a combination of signature-based detection and machine-learning analysis, based off the repositories [Loki](https://github.com/Neo23x0/Loki) and MDML (no longer available).
 
 ### Project Objective
 The primary goal of this project was to research and develop an open-source security solution capable of detecting malicious Portable Executables (PEs), PDFs, and Office Documents through both traditional indicators of compromise (IOCs) and advanced machine-learning models.
@@ -29,4 +29,4 @@ Allows for integration with Splunk via HTTP Event Collector (HEC) for live event
 **Server:** Receives files, performs signature/heuristic/ML analysis, and logs results to MongoDB and Splunk.  
 **Heuristics:** Performs static analysis (e.g., entropy checks and anti-debugging detection) to identify suspicious file properties.  
 
-For a detailed report of the project, from ideation to the final product, refer [here](https://) 
+For a detailed report of the project, from ideation to the final product, refer [here](https://github.com/electrum21/MALLEVEL/blob/main/mallevel_readme.md)
