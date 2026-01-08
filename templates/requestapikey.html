@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}MALLEVEL: Request API Key{% endblock %}
+
+{% block header %}
+<h1 class="w3-center"><b>Request API Key</b></h1>
+{% endblock %}
+
+{% block content %}
+<div class="w3-container">
+  <br>
+  <h4>The API Key is required for the MALLEVEL agent to connect to the MALLEVEL server and seamlessly send new files within endpoints for scanning.<br></h4>
+  <form action = "/requestapikey" method = "POST" enctype = "multipart/form-data" class="form-group">
+    <br>
+      <img class="keyimage" src="/static/img/key.png"/>
+      <br>
+      <table style="width:100%;" class="directories">
+        {% if current_user.get_api_key_info() == None %}
+        <tr>
+          <td>There is currently no API Key generated for your account.</td>
+        </tr>
+        <tr>
+          <td><input type = "submit" name = "submit" value="Generate API Key" class="formbutton btn btn-success"/></td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="3">There is an existing API Key for your account.</td>
+        </tr>
+        <tr></tr>
+        <tr>
+          <th>API Key</th>
+          <th>Generated On</th>
+          <th>Windows Username</th>
+        </tr>
+        <tr>
+          <td><span id="api_key">{{ current_user.get_api_key_info().api_key }}</span> <button onclick="copykey()" formmethod="get"><i class="fa fa-files-o" aria-hidden="true"></i></button></td>
+          <td>{{ current_user.get_api_key_info().generated_on }}</td>
+          <td>{{ current_user.get_api_key_info().endpoint_username }}</td>
+        </tr>
+        <tr>
+          <td colspan="3"><input type = "submit" name = "submit" value="Regenerate New API Key" class="formbutton btn btn-success"/></td>
+        </tr>
+        {% endif %}
+      </table>
+  </form>
+</div>
+<div class="error-display">
+  {% if error %}
+  <p class="error">{{error}}</p>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+  // Script to open and close sidebar
+  function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+  }
+
+  function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+  }
+
+  function copykey() {
+    var copyText = document.getElementById("api_key").innerHTML;
+    navigator.clipboard.writeText(copyText);
+    alert("You have copied the API Key! Place it in your agent configuration file.");
+  }
+
+
+  </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+{% endblock %}

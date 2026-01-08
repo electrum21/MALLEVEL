@@ -1,0 +1,269 @@
+{% extends "base.html" %}
+
+{% block title %}MALLEVEL: Recent File Scan Results{% endblock %}
+
+{% block header %}
+<h1 class="w3-center"><b>Recent File Scan Results</b></h1>
+{% endblock %}
+
+{% block content %}
+<div class="w3-container">
+  {% if analysis_report %}
+  {% if analysis_report.files|length > 1 %}
+  <h4>The submitted files have been scanned successfully!</h4>
+  {% else %}
+  <h4>The submitted file has been scanned successfully!</h4>
+  {% endif %}
+  {% if analysis_report.statistics %}
+  <div class="analysis-stats w3-blue">
+    <fieldset>
+      <legend><h3 class="w3-text-white text-center"><b>Analysis Information</b></h3></legend>
+      <p><b>Start Time: </b> {{ analysis_report.statistics.start_time }}</p>
+      <p><b>End Time: </b> {{ analysis_report.statistics.end_time }}</p>
+      <p><b>No. of Files Scanned: </b> {{ analysis_report.statistics.file_count }}</p>
+      <p><b>Scan Summary: </b> {{ analysis_report.statistics.file_dangerous }} Dangerous Files, {{ analysis_report.statistics.file_safe }} Safe Files</p>
+      <a href="{{ url_for('download_report') }}" class="download">Download Analysis Report <i class="fa fa-download navlogo" aria-hidden="true"></i></a>
+    </fieldset>
+  </div>
+  {% endif %}
+  <h4>You may want to validate the scan results with virustotal.com by clicking on "[VT]"</h4>
+  {% for key, value in analysis_report.files.items() %}
+  <div class="panel-group">
+    {% if value.verdict == 'SAFE' %}
+    <div class="panel panel-default panel-success">
+    {% elif value.verdict == 'DANGEROUS' %}
+    <div class="panel panel-default panel-danger ">
+    {% endif %}
+      <div class="panel-heading black-border">
+        <table style="width:100%;">
+          <tr>
+            <td>
+            <h4 class="panel-title">
+              <a data-toggle="collapse" href="#collapse_{{value.md5}}"><b>{{key}}</b></a>
+            </h4>
+            </td>
+            <td>
+              <h4 class="w3-right-align"><a title="MALLEVEL has given {{key}} a score of {{value.signature_detection_score}} based on signature-based detection"><b>[SIGSCORE: {{value.signature_detection_score}}]</b></a>
+              {% if value.heuristics != None %}
+                <a title="MALLEVEL Heuristics thinks {{key}} is {{value.prediction}}"><b>[HEUR]</b></a>
+              {% else %}
+                &nbsp;
+              {% endif %}
+              {% if value.prediction != None %}
+                <a title="MALLEVEL ML thinks {{key}} is {{value.prediction}}"><b>[ML]</b></a>
+              {% else %}
+                &nbsp;
+              {% endif %}
+              </h4>
+          </td>
+          </tr>
+        </table>
+      </div>
+      <div id="collapse_{{value.md5}}" class="panel-collapse collapse">
+        <div class="panel-body">
+          <table class="w3-table table-bordered w3-white grey-border">
+            <tr>
+              <th>FINAL VERDICT</th>
+              <td>{{value.verdict}}</td>
+            </tr>
+            <tr>
+              <th>Signature Detection Score</th>
+              <td>{{value.signature_detection_score}}</td>
+            </tr>
+            {% if value.heuristics %}
+            <tr>
+              <th>Heuristics Detection</th>
+              <td>{{value.heuristics}}</td>
+            </tr>
+            {% endif %}
+            {% if value.prediction %}
+            <tr>
+              <th>ML Prediction</th>
+              <td>{{value.prediction}}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>File Type</th>
+                <td>{{value.file_type}}</td>
+            </tr>
+            <tr>
+              <th>File Size</th>
+              <td>{{value.file_size}}KB</td>
+            </tr>
+            <tr>
+              <th>MD5 Hash</th>
+              <td>{{value.md5}} <a href="https://www.virustotal.com/gui/file/{{value.md5}}/" target="_blank">[VT]</a></td>
+            </tr>
+            <tr>
+              <th>SHA1 Hash</th>
+              <td>{{value.sha1}} <a href="https://www.virustotal.com/gui/file/{{value.sha1}}/" target="_blank">[VT]</a></td>
+            </tr>
+            <tr>
+              <th>SHA256 Hash</th>
+              <td>{{value.sha256}} <a href="https://www.virustotal.com/gui/file/{{value.sha256}}/" target="_blank">[VT]</a></td>
+            </tr>
+            {% if value.file_imports %}
+            <tr>
+              <td colspan="2">
+                <div class="panel-group">
+                  <div class="panel w3-blue">
+                    <div class="panel-heading">
+                      <table style="width:100%;">
+                        <tr>
+                          <td>
+                            <h5 class="panel-title">
+                              <a data-toggle="collapse" href="#collapse_{{value.md5}}_imports"><b>File Imports</b></a>
+                            </h5>
+                          </td>
+                          <td><h5 class="w3-right-align">&nbsp;</h5></td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div id="collapse_{{value.md5}}_imports" class="panel-collapse collapse">
+                      <div class="panel-body w3-white">
+                        <ol>
+                        {% for import in value.file_imports %}
+                        <li>
+                          {{import}}
+                        </li>
+                        {% endfor %}
+                        </ol>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr> 
+            {% endif %}
+            {% if value.capabilities %}
+            <tr>
+              <td colspan="2">
+                <div class="panel-group">
+                  <div class="panel w3-blue">
+                    <div class="panel-heading">
+                      <table style="width:100%;">
+                        <tr>
+                          <td>
+                            <h5 class="panel-title">
+                              <a data-toggle="collapse" href="#collapse_{{value.md5}}_capabilities"><b>File Capabilities</b></a>
+                            </h5>
+                          </td>
+                          <td><h5 class="w3-right-align">&nbsp;</h5></td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div id="collapse_{{value.md5}}_capabilities" class="panel-collapse collapse">
+                      <div class="panel-body w3-white">
+                        <ol>
+                        {% for capability, description in value.capabilities.items() %}
+                        <li>
+                          <b>{{capability}}</b> : {{description}}
+                        </li>
+                        {% endfor %}
+                        </ol>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr> 
+            {% endif %}
+            {% if value.contains %}
+            <tr>
+              <td colspan="2">
+                <div class="panel-group">
+                  <div class="panel w3-blue">
+                    <div class="panel-heading">
+                      <table style="width:100%;">
+                        <tr>
+                          <td>
+                            <h5 class="panel-title">
+                              <a data-toggle="collapse" href="#collapse_{{value.md5}}_contains"><b>Contains</b></a>
+                            </h5>
+                          </td>
+                          <td><h5 class="w3-right-align">&nbsp;</h5></td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div id="collapse_{{value.md5}}_contains" class="panel-collapse collapse">
+                      <div class="panel-body w3-white">
+                        <ol>
+                        {% for contained in value.contains %}
+                        <li>
+                          {{contained}}
+                        </li>
+                        {% endfor %}
+                        </ol>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr> 
+            {% endif %}
+            {% if value.reasons %}
+            <tr>
+              <td colspan="2">
+                <div class="panel-group">
+                  <div class="panel w3-blue">
+                    <div class="panel-heading">
+                      <table style="width:100%;">
+                        <tr>
+                          <td>
+                            <h5 class="panel-title">
+                              <a data-toggle="collapse" href="#collapse_{{value.md5}}_reasons"><b>Reasons</b></a>
+                            </h5>
+                          </td>
+                          <td><h5 class="w3-right-align">&nbsp;</h5></td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div id="collapse_{{value.md5}}_reasons" class="panel-collapse collapse">
+                      <div class="panel-body w3-white">
+                        <ol>
+                        {% for reason in value.reasons %}
+                        <li>
+                          {{reason}}
+                        </li>
+                        {% endfor %}
+                        </ol>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr> 
+            {% endif %}
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+<br>
+{% elif error == "No Scan" %}
+  <h4 class="w3-center">There has not been any file submitted for scanning.<br>Submit a file <a href="/uploadfile">here</a>.</h4>
+  <br>
+{% elif error == "No Results" %}
+  <h4 class="w3-center">There is currently no analysis result.<br>Continue waiting for your submission to be processed,<br>or submit another file <a href="/uploadfile">here</a>.</h4>
+  <br>
+{% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+  // Script to open and close sidebar
+  function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+  }
+
+  function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+  }
+
+
+  </script>
+{% endblock %}

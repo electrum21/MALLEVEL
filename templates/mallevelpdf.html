@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}MALLEVEL: ML Prediction of PDFs{% endblock %}
+
+{% block header %}
+<h1 class="w3-center"><b>MALLEVEL Prediction of PDFs</b></h1>
+{% endblock %}
+
+{% block content %}
+<div class="w3-container">
+  <div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-heading w3-blue">
+        <table style="width:100%;">
+          <tr>
+            <td>
+              <h4 class="panel-title">
+                <a data-toggle="collapse" href="#collapse_flow_1"><h3>Model & Performance</h3></a>
+              </h4>
+            </td>
+            <td><h4>&nbsp;</h4></td>
+          </tr>
+        </table>
+      </div>
+      <div id="collapse_flow_1" class="panel-collapse collapse">
+        <div class="panel-body">
+          <h4>Model Used: <b>1. Random Forest</b></h4>
+          <table class="confusion_matrix">
+            <thead>
+              <th>Confusion Matrix</th>
+              <th>Statistics</th>
+            </thead>
+            <tr>
+              <td rowspan="4"><img src="/static/img/pdf_randomforest.png" style="height:300px;"/></td>
+              <td>Training Accuracy: 100.00%</td>
+            </tr>
+            <tr>
+              <td>Testing Accuracy: 99.94%</td>
+            </tr>
+            <tr>
+              <td>False Positive Rate: 0.07%</td>
+            </tr>
+            <tr>
+              <td>False Negative Rate: 0.05%</td>
+            </tr>
+          </table>
+          <br>
+          <h4>Model Used: <b>2. Decision Tree</b></h4>
+          <table class="confusion_matrix">
+            <thead>
+              <th>Confusion Matrix</th>
+              <th>Statistics</th>
+            </thead>
+            <tr>
+              <td rowspan="4"><img src="/static/img/pdf_decisiontree.png" style="height:300px;"/></td>
+              <td>Training Accuracy: 100.00%</td>
+            </tr>
+            <tr>
+              <td>Testing Accuracy: 99.89%</td>
+            </tr>
+            <tr>
+              <td>False Positive Rate: 0.21%</td>
+            </tr>
+            <tr>
+              <td>False Negative Rate: 0.06%</td>
+            </tr>
+          </table>
+          <br>
+          <h4>Model Used: <b>3. Neural Network</b></h4>
+          <table class="confusion_matrix">
+            <thead>
+              <th>Confusion Matrix</th>
+              <th>Statistics</th>
+            </thead>
+            <tr>
+              <td rowspan="4"><img src="/static/img/pdf_neuralnetwork.png" style="height:300px;"/></td>
+              <td>Training Accuracy: 95.80%</td>
+            </tr>
+            <tr>
+              <td>Testing Accuracy: 95.76%</td>
+            </tr>
+            <tr>
+              <td>False Positive Rate: 9.05%</td>
+            </tr>
+            <tr>
+              <td>False Negative Rate: 2.05%</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-heading w3-blue">
+        <table style="width:100%;">
+          <tr>
+            <td>
+              <h4 class="panel-title">
+                <a data-toggle="collapse" href="#collapse_flow_2"><h3>Dataset Preview</h3></a>
+              </h4>
+            </td>
+            <td><h4>&nbsp;</h4></td>
+          </tr>
+        </table>
+      </div>
+      <div id="collapse_flow_2" class="panel-collapse collapse">
+        <div class="panel-body dataset">
+          {% autoescape off %}
+            {{ pdf_dataset }}
+          {% endautoescape %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>   
+{% endblock %}
+
+{% block scripts %}
+  <script>
+  // Script to open and close sidebar
+  function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+  }
+
+  function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+  }
+
+
+  </script>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}MALLEVEL: My Quarantined Files{% endblock %}
+
+{% block header %}
+<h1 class="w3-center"><b>My Quarantined Files</b></h1>
+{% endblock %}
+
+{% block content %}
+<div class="w3-container">
+    <h4><b>Quarantined Files:</b></h4>
+      <table class="quarantine" style="width:100%;">
+        <tr>
+          <th style="width:35%">File Name</th>
+          <th style="width:35%">Current Status</th>
+          <th style="width:30%">Request Analysis</th>
+        </tr>
+        {% if quarantined_files %}
+        {% for quarantined_file in quarantined_files %}
+        {% if quarantined_file.file_status != "Released" %}
+        <tr>
+          <td>{{quarantined_file.file_name}}</td>
+          <td>{{quarantined_file.file_status}}</td>
+          {% if quarantined_file.file_status == "Pending" or quarantined_file.file_status == "Blacklisted" %}
+          <td>-</td>
+          {% elif quarantined_file.request_for_analysis == False %}
+          <td><form action="{{url_for('request_file_analysis', file_hash=quarantined_file.sha256_hash, web_username=current_user.username)}}" method="POST"><input type="submit" class="btn btn-primary" value="Request Analysis" onclick="return confirm('Are you sure you want to send a request to the administrator to analyze {{quarantined_file.file_name}}?');"></form></td>
+          {% else %}
+          <td>Already Requested</td>
+          {% endif %}
+        {% endif %}
+        {% endfor %}
+      </table><br>
+      <h4><b>Released Files:</b></h4>
+      <table class="quarantine" style="width:100%;">
+        <tr>
+          <th>File Name</th>
+        </tr>
+        {% for quarantined_file in quarantined_files %}
+        {% if quarantined_file.file_status == "Released" %}
+        <tr>
+          <td>{{quarantined_file.file_name}}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+      </table><br>
+      </table>
+        </div>
+      </div>
+    </div>
+  </div> -->
+    <br><br>
+    <div class="display">
+      {% if error %}
+      <p class="error">{{error}}</p>
+      {% endif %}
+      {% if message %}
+      <p>{{message|safe}}</p>
+      {% endif %}
+    </div>
+    <br>
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+  // Script to open and close sidebar
+  function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+  }
+
+  function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+  }
+
+  </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+
+
+{% endblock %}

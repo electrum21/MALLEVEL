@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}MALLEVEL: Update Signature Database{% endblock %}
+
+{% block header %}
+<h1 class="w3-center"><b>Update Signature Database</b></h1>
+{% endblock %}
+
+{% block content %}
+<div class="w3-container">
+  <br>
+  <div>
+  <form action="/updatesignature" method="post">
+    <button type="submit" name="update" value="update" class="w3-bar w3-green">Update Signatures</button>
+  </form>
+  <br>
+  </div>  
+  <div class="w3-responsive"  style="height:400px">
+    <h4><b>Recent Manual Update Logs</b></h4>
+    <table class="w3-table-all table-bordered">
+      <tbody>
+      {% if logs != None %}
+      {% for log in logs %}
+      <tr>
+          <td>{{ log }}</td>
+      </tr>
+      {% endfor %}
+      {% else %}
+      <tr>
+        <td>There is currently no log.</td>
+      </tr>
+      {% endif %}
+      </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}
+

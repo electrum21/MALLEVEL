@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}MALLEVEL: Work Flow{% endblock %}
+
+{% block header %}
+<h1 class="w3-center"><b>MALLEVEL Scanning Work Flow</b></h1>
+{% endblock %}
+
+{% block content %}
+<div class="w3-container">
+  <div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-heading w3-blue">
+        <table style="width:100%;">
+          <tr>
+            <td>
+              <h4 class="panel-title">
+                <a data-toggle="collapse" href="#collapse_flow_1"><h3>The Scanning Workflow (User Upload)</h3></a>
+              </h4>
+            </td>
+            <td><h4>&nbsp;</h4></td>
+          </tr>
+        </table>
+      </div>
+      <div id="collapse_flow_1" class="panel-collapse collapse">
+        <div class="panel-body">
+          <img src="/static/img/MALLEVEL Flow Diagram (User) - Transparent.png" style="width:100%;"/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-heading w3-blue">
+        <table style="width:100%;">
+          <tr>
+            <td>
+              <h4 class="panel-title">
+                <a data-toggle="collapse" href="#collapse_flow_2"><h3>The Scanning Workflow (Agent Monitoring)</h3></a>
+              </h4>
+            </td>
+            <td><h4>&nbsp;</h4></td>
+          </tr>
+        </table>
+      </div>
+      <div id="collapse_flow_2" class="panel-collapse collapse">
+        <div class="panel-body">
+          <img src="/static/img/MALLEVEL Flow Diagram (Agent) - Transparent.png" style="width:100%;"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>   
+{% endblock %}
+
+{% block scripts %}
+  <script>
+  // Script to open and close sidebar
+  function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+  }
+
+  function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+  }
+
+
+  </script>
+{% endblock %}

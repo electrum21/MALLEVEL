@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}MALLEVEL: Upload Files{% endblock %}
+
+{% block header %}
+<h1 class="w3-center"><b>Upload Files</b></h1>
+{% endblock %}
+
+{% block content %}
+<div class="w3-container">
+  <br>
+  <h4>Detect whether files are malicious with MALLEVEL!<br></h4>
+  <form action = "/uploadfile" method = "POST" enctype = "multipart/form-data" class="form-group">
+    <br>
+      <img class="uploadimage" src="/static/img/upload.png"/>
+      <br>
+      <table style="width:100%;">
+        <tr>
+          <td><input type = "file" name = "File" class="formbutton" multiple/></td>
+          <td><input type = "submit" class="submit" name = "submit" class="formbutton"/></td>
+        </tr>
+      </table>
+  </form>
+</div>
+<div class="error-display">
+  {% if error == 'No File' %}
+  <p class="error">No file was uploaded.</p>
+  {% elif error == "Unaccepted File Type" %}
+  <p class="error">The type of file you have submitted is not accepted. Please submit another file for analysis.<br>
+  Acceptable Extensions: txt, pdf, png, jpg, jpeg, gif, exe, tmp
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+  // Script to open and close sidebar
+  function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+  }
+
+  function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+  }
+
+
+  </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+{% endblock %}

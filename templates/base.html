@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{% endblock %}</title>
+{% block head %}
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.1/min/dropzone.min.css">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    
+{% endblock %}
+
+{% block style %}
+<style>
+body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
+
+body {font-size:16px; background-color:		#E6E6FA;}
+
+.log-display{
+border:5px solid #0094FF;
+padding:15px;
+border-radius:20px;
+background-color:white;
+height:400px;
+overflow-y:auto;
+}
+
+.dashboard-table{
+  color:black;
+  background-color: white;
+  border:2px solid #0094FF;
+}
+
+.directories, .quarantine, .whitelist{
+  color:black;
+  background-color: white;
+  border:2px solid #0094FF;
+}
+
+.directories td, .directories th, .quarantine td, .quarantine th, .whitelist td, .whitelist th{
+  padding:10px;
+  border:2px solid #0094FF;
+}
+
+.directories th, .quarantine th, .whitelist th{
+  background-color:#0094FF;
+  color:white;
+}
+
+.dashboard-table td{
+  border-left:2px solid #0094FF;
+  border-right:2px solid #0094FF;
+}
+
+.form-group{
+  border:5px solid #0094FF;
+  padding:15px;
+  border-radius:20px;
+  background-color:white;
+  height:60%;
+}
+
+.formbutton{
+  font-size:1.1em;
+}
+
+.blacklist, .release{
+  display: inline-block;
+  background-color: white;
+}
+
+canvas{
+  background-color: white;
+  color: black;
+  padding:10px;
+  margin:0 auto;
+}
+
+.loader1 {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #0094FF;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+  margin:auto;
+  left:300px;
+  right:0;
+  top:0;
+  bottom:0;
+  position:fixed;
+}
+
+.loader2 {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #0094FF;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+  margin:auto;
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+  position:fixed;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.grey-border{
+  border:2px solid rgb(140, 140, 140);
+}
+
+.black-border{
+  border:2px solid black;
+}
+
+.align{
+vertical-align:middle;
+}
+
+.btn:hover{
+transform: translateY(2px);
+box-shadow: 3px 3px 3px #888888;
+transition:0.6s
+}
+
+#create{
+float:right;
+text-decoration:underline;
+}
+
+#hr{
+border-bottom:5px white ridge
+}
+
+h1, h2{
+text-decoration:underline;
+color:#0094FF;
+}
+
+.header {
+margin-top:0px;
+}
+
+.error{
+padding-left:15px;
+color:red;
+}
+
+.message{
+  padding-left:15px;
+}
+
+.lasterror{
+border: 3px ridge white;
+box-shadow:5px 0px 10px white;
+}
+
+.uploadimage, .whitelistimage, .urlimage, .loginimage, .passwordimage, .keyimage, .userimage{
+  display:block;
+  width:20%;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+#sort, #reset{
+border-radius:15px;
+border:2px grey ridge;
+box-shadow:3px 3px 10px grey;
+margin:10px;
+margin-top:0px;
+}
+
+.w3-dropdown-hover .w3-button:hover{
+transition:0.6s;
+}
+
+#bk{
+border:4px solid #0094FF;
+border-radius:15px;
+box-shadow:5px 5px 10px grey;
+overflow:auto;
+margin-bottom:30px;
+}
+
+.w3-hover-black:hover{
+border-left:4px solid #00ccff;
+}
+
+.mt{
+margin-top:20px;
+border-top-left-radius:30px;
+border-top-right-radius:30px;
+padding-bottom:10px;
+}
+
+.bot{
+margin-top:20px;
+border:3px ridge #0094FF;
+border-bottom-left-radius:30px;
+border-bottom-right-radius:30px;
+}
+
+
+fieldset {
+margin:5;
+border: 3px groove white !important;
+padding: 0 10px 10px 10px !important;
+}
+
+.tableFixHead {
+  height: 100px;
+}
+
+.tableFixHead tbody{
+  overflow-y: auto;
+}
+
+.tableFixHead thead th {
+  position: sticky;
+  top: 0;
+}
+
+.logo {
+ width:80%;
+ margin-left: 10%;
+}
+
+.orange-link{
+  color:#0094FF;
+}
+
+.download{
+  display:inline-block;
+  padding-left:10px;
+  padding-right:10px;
+  border-radius:10px;
+  border:2px black solid;
+  background-color: green;
+  color:white;
+  text-align: center;
+  width:100%;
+}
+
+.proceedgreen{
+  display:inline-block;
+  padding-left:10px;
+  padding-right:10px;
+  font-size:1.1em;
+  border-radius:10px;
+  border:2px black solid;
+  background-color: green;
+  color:white;
+  text-align: center;
+  width:100%;
+}
+
+.proceedred{
+  display:inline-block;
+  padding-left:10px;
+  padding-right:10px;
+  font-size:1.1em;
+  border-radius:10px;
+  border:2px black solid;
+  background-color: red;
+  color:white;
+  text-align: center;
+  width:100%;
+}
+
+.proceedgreen:hover, .proceedred:hover{
+  color:white;
+  transform: translateY(2px);
+  box-shadow: 3px 3px 3px #888888;
+  transition:0.6s
+}
+
+.proceedgreen:active, .proceedred:active{
+  color:white;
+}
+
+.download:hover{
+  color:white;
+  transform: translateY(2px);
+  box-shadow: 3px 3px 3px #888888;
+  transition:0.6s
+}
+
+.download:active{
+  color:white;
+}
+
+.submit{
+  float:right;
+}
+
+.panel-heading{
+  height:60px;
+}
+
+#splunkemail th, #splunkemail td{
+  border:2px solid black;
+}
+
+.left-padding{
+  padding-left:10px;
+}
+
+.top-padding{
+  padding-top:10px;
+}
+
+.dataset{
+  width:100%;
+  overflow-x: scroll;
+}
+
+.dataset td, .dataset th{
+  padding-left:2px;
+  padding-right:2px;
+}
+
+.confusion_matrix th, .confusion_matrix td{
+  border: 2px solid black;
+  border-collapse: collapse;
+  padding-left:5px;
+}
+
+.confusion_matrix{
+  width: 100%;
+}
+
+.blueback{
+  background-color: #0094FF;
+  color:white;
+}
+
+</style>
+{% endblock %}
+
+{% block navbar %}
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar blueback w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft" style="width:100%;font-size:22px">Close</a><br>
+    <div class="w3-bar-block">
+    {% if current_user.is_authenticated %}
+    <div class="w3-dropdown-hover">
+      <button class="w3-button">{{ current_user.username }} <i class="fa fa-user navlogo" aria-hidden="true"></i><span class="caret"></span></button>
+        <div class="w3-dropdown-content w3-bar-block w3-card-4">
+          <a href="/logout" class="w3-bar-item w3-button">Logout <i class="fa fa-sign-out navlogo" aria-hidden="true"></i></a>
+          <a href="/changepassword" class="w3-bar-item w3-button">Change Password <i class="fa fa-pencil navlogo" aria-hidden="true"></i></a>
+          <a href="/requestapikey" class="w3-bar-item w3-button">Request API Key <i class="fa fa-key navlogo" aria-hidden="true"></i></a>
+        </div>
+    </div>
+    {% else %}
+    <a href="/login" class="w3-bar-item w3-button w3-hover-white">Login</a>
+    {% endif %}
+    <br><br>
+    <img class='logo' src="static/img/logobig.png"/><br><br>
+    {% if current_user.is_authenticated %}
+    {% if current_user.is_admin() == True %}  <!-- self-defined method in UserAccount class -->
+    <a href="/dashboard" class="w3-bar-item w3-button w3-hover-white">Dashboard</a>
+    <a href="/viewconfigurations" class="w3-bar-item w3-button w3-hover-white">Configurations</a>
+    <a href="/viewquarantinedfiles_admin" class="w3-bar-item w3-button w3-hover-white">Quarantining</a>
+    <div class="w3-dropdown-hover">
+      <button class="w3-button">User Management <span class="caret"></span></button>
+      <div class="w3-dropdown-content w3-bar-block w3-card-4">
+        <a href="/createuser" class="w3-bar-item w3-button">Create Users <i class="fa fa-plus navlogo" aria-hidden="true"></i></a>
+        <a href="/viewusers" class="w3-bar-item w3-button">View Users <i class="fa fa-eye navlogo" aria-hidden="true"></i></a>
+      </div>
+      </div>
+    <div class="w3-dropdown-hover">
+        <button class="w3-button">Whitelisting <span class="caret"></span></button>
+          <div class="w3-dropdown-content w3-bar-block w3-card-4">
+            <a href="/whitelistfile" class="w3-bar-item w3-button">Whitelist Files <i class="fa fa-file-text navlogo" aria-hidden="true"></i></a>
+            <a href="/viewwhitelistedfiles" class="w3-bar-item w3-button">View Whitelisted Files <i class="fa fa-eye navlogo" aria-hidden="true"></i></a>
+          </div>
+        </div>
+        <div class="w3-dropdown-hover">
+        <button class="w3-button">Signature Database <span class="caret"></span></button>
+        <div class="w3-dropdown-content w3-bar-block w3-card-4">
+          <a href="/viewsignature" class="w3-bar-item w3-button">View Signatures <i class="fa fa-eye navlogo" aria-hidden="true"></i></a>
+          <a href="/updatesignature" class="w3-bar-item w3-button">Update Signatures <i class="fa fa-wrench navlogo" aria-hidden="true"></i></a>
+        </div>
+        </div>
+    {% else %}
+    <a href="/viewquarantinedfiles_user" class="w3-bar-item w3-button w3-hover-white">My Quarantined Files</a>
+    {% endif %}
+    {% endif %}
+    <div class="w3-dropdown-hover">
+    <button class="w3-button">File Analysis <span class="caret"></span></button>
+      <div class="w3-dropdown-content w3-bar-block w3-card-4">
+        <a href="/uploadfile" class="w3-bar-item w3-button">Upload Files <i class="fa fa-upload navlogo" aria-hidden="true"></i></a>
+        <a href="/viewresults" class="w3-bar-item w3-button">View Analysis Results <i class="fa fa-eye navlogo" aria-hidden="true"></i></a>
+      </div>
+    </div>
+    <!-- <div class="w3-dropdown-hover">
+      <button class="w3-button">URL Analysis <span class="caret"></span></button>
+        <div class="w3-dropdown-content w3-bar-block w3-card-4">
+          <a href="/checkurl" class="w3-bar-item w3-button">Check URL Status <i class="fa fa-link navlogo" aria-hidden="true"></i></a>
+        </div>
+      </div> -->
+    <div class="w3-dropdown-hover">
+      <button class="w3-button">ML Documentation <span class="caret"></span></button>
+        <div class="w3-dropdown-content w3-bar-block w3-card-4">
+          <a href="/pe" class="w3-bar-item w3-button">PEs</a>
+          <a href="/pdf" class="w3-bar-item w3-button">PDFs</a>
+          <a href="/office" class="w3-bar-item w3-button">Office Documents</a>
+          <a href="/url" class="w3-bar-item w3-button">URLs</a>
+        </div>
+      </div>
+    </div>
+    <div class="w3-dropdown-hover">
+      <button class="w3-button">How MALLEVEL Works <span class="caret"></span></button>
+        <div class="w3-dropdown-content w3-bar-block w3-card-4">
+          <a href="/workflow" class="w3-bar-item w3-button">Work Flow</a>
+          <a href="/resultshtml" class="w3-bar-item w3-button">Sample Results</a>
+          <a href="/splunk" class="w3-bar-item w3-button">Splunk Integration</a>
+        </div>
+      </div>
+    </div>
+</nav>
+{% endblock %}
+
+
+<!-- Top menu on small screens -->
+<header class="w3-container w3-top w3-hide-large w3-blue w3-xlarge w3-padding" id="hr">
+  <a href="javascript:void(0)" class="w3-button w3-blue w3-margin-right" onclick="w3_open()">☰</a>
+  <span>MALLEVEL</span>
+</header>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:340px;margin-right:60px">
+  <!-- Header -->
+  <div class="w3-container header">
+    {% block header %}
+    {% endblock %}
+  </div>
+  {% block content %}
+  {% endblock %}
+</div>
+
+  {% block scripts %}
+  <script>
+  // Script to open and close sidebar
+  function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+  }
+
+  function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+  }
+
+  </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/cf8a03484f.js" crossorigin="anonymous"></script>
+    {% endblock %}
+
+</body>
+</html>

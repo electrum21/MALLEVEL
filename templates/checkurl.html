@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}MALLEVEL: Check URL Status{% endblock %}
+
+{% block header %}
+<h1 class="w3-center"><b>Check URL Status</b></h1>
+{% endblock %}
+
+{% block content %}
+<div class="w3-container">
+  <br>
+  <h4>Check whether a URL is safe or malicious with MALLEVEL! *Fully Powered by Machine Learning<br></h4>
+  <form action = "/checkurl" method = "POST" enctype = "multipart/form-data" class="form-group">
+    <br>
+      <img class="urlimage" src="/static/img/url.png"/>
+      <br>
+      <table style="width:100%;">
+        <tr>
+          <td><label for="url">URL to check:</label><input type = "text" name = "url" style="width:70%;" placeholder="https://www.google.com"/></td>
+          <td><input type = "submit" class="submit" name = "submit" class="formbutton"/></td>
+      </table>
+  </form>
+</div>
+<div class="display">
+  {% if prediction %}
+    {% if prediction == "SAFE" %}
+    <div class="panel panel-default panel-success">
+      <div class="panel-heading black-border">
+        <table style="width:100%;">
+          <tr>
+            <td>
+            <h4 class="panel-title">
+              <b>MALLEVEL thinks that {{url}} is SAFE</b>
+            </h4>
+            </td>
+            <td>
+              <h4 class="w3-right-align"><a title="MALLEVEL thinks that '{{url}}' is SAFE"><b>[ML]</b></a>
+              </h4>
+          </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <a href="{{url}}" target="_blank" class="proceedgreen">Proceed to {{url}}</a>
+    {% else %}
+    <div class="panel panel-default panel-danger ">
+      <div class="panel-heading black-border">
+        <table style="width:100%;">
+          <tr>
+            <td>
+            <h4 class="panel-title">
+              <b>MALLEVEL thinks that {{url}} is DANGEROUS</b>
+            </h4>
+            </td>
+            <td>
+              <h4 class="w3-right-align"><a title="MALLEVEL thinks that '{{url}}' is DANGEROUS"><b>[ML]</b></a>
+              </h4>
+          </td>
+          </tr>
+        </table>
+      </div>
+    </div>  
+    <a href="{{url}}" target="_blank" class="proceedred">Proceed to {{url}} (AT YOUR OWN RISK)</a>
+    {% endif %}
+  {% endif %}
+</div>  
+<div class="display">
+  {% if error %}
+  <p class="error">{{error}}</p>
+  {% endif %}
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+  <script>
+  // Script to open and close sidebar
+  function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+  }
+
+  function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+  }
+
+
+  </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+{% endblock %}

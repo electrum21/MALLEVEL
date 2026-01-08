@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}MALLEVEL: View Existing Signatures{% endblock %}
+
+{% block header %}
+<h1 class="w3-center"><b>View Existing Signatures</b></h1>
+{% endblock %}
+
+{% block content %}
+<div class="w3-container">
+  <br>
+  <div class="w3-responsive">
+  <h4><b>Indicators of Compromise ({{ iocs_file_list | length }})</b></h4>
+  <table class="w3-table-all table-bordered">
+    <thead>
+      <tr class="w3-blue">
+        <th>File Name</th>
+        <th>Size</th>
+        <th>Last Modified</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for iocs_file in iocs_file_list %}
+      <tr>
+        <td>{{ iocs_file }}</td>
+        <td>{{ iocs_file_list[iocs_file]["size"] }}KB</td>
+        <td>{{ iocs_file_list[iocs_file]["modified"] }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <br>
+  <div class="w3-responsive">
+  <h4><b>Miscellaneous ({{ misc_file_list | length }})</b></h4>
+  <table class="w3-table-all table-bordered">
+    <thead>
+      <tr class="w3-blue">
+        <th>File Name</th>
+        <th>Size</th>
+        <th>Last Modified</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for misc_file in misc_file_list %}
+      <tr>
+        <td>{{ misc_file }}</td>
+        <td>{{ misc_file_list[misc_file]["size"] }}KB</td>
+        <td>{{ misc_file_list[misc_file]["modified"] }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <br>
+  
+  <h4><b>YARA Rules ({{ yara_file_list | length }})</b></h4>
+  <div class="w3-responsive"  style="height:400px">
+  <table class="w3-table-all table-bordered">
+    <thead>
+      <tr class="w3-blue">
+        <th>File Name</th>
+        <th>Size</th>
+        <th>Last Modified</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for yara_file in yara_file_list %}
+      <tr>
+        <td>{{ yara_file }}</td>
+        <td>{{ yara_file_list[yara_file]["size"] }}KB</td>
+        <td>{{ yara_file_list[yara_file]["modified"] }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <br>
+</div>
+{% endblock %}
+

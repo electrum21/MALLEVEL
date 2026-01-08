@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}MALLEVEL: File Scanning in Progress...{% endblock %}
+
+{% block header %}
+<script>
+  function navigate() {
+      window.location.href = 'viewresults';  // Redirects user to the /map route when 'create_map' is finished
+  }
+  fetch('scan').then(navigate); // Performing 'create_map' and then calls navigate() function, declared above
+</script>
+<h1 class="w3-center"><b>File Scanning</b></h1>
+{% endblock %}
+
+{% block content %}
+<div class="w3-container">
+  <h3 class="w3-center">The scan is currently in progress...</h3>
+  <div class="w3-large w3-hide-medium w3-hide-small loader1"></div>
+  <div class="w3-hide-large loader2"></div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+  // Script to open and close sidebar
+  function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+  }
+
+  function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+  }
+
+
+  </script>
+{% endblock %}

@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}MALLEVEL: View Quarantined Files{% endblock %}
+
+{% block header %}
+<h1 class="w3-center"><b>View Quarantined Files</b></h1>
+{% endblock %}
+
+{% block content %}
+<div class="w3-container">
+    <h4><b>Quarantined Files:</b></h4>
+      <table class="quarantine" style="width:100%;">
+        <tr>
+          <th style="width:25%;">File Name</th>
+          <th style="width:25%;">Quarantined In</th>
+          <th style="width:15%;">Current Status</th>
+          <th style="width:15%;">Analysis Requested</th>
+          <th style="width:20%;">Update Status</th>
+        </tr>
+        {% for quarantined_file in quarantined_files %}
+        {% if quarantined_file.file_status == "Quarantined" %}
+        <tr>
+          <td>{{quarantined_file.file_name}}</td>
+          <td>{{quarantined_file.hostname}} ({{quarantined_file.username}})</td>
+          <td>{{quarantined_file.file_status}}</td>
+          {% if quarantined_file.request_for_analysis == True %}
+          <td>Yes</td>
+          {% else %}
+          <td>No</td>
+          {% endif %}
+          <td>
+              <form style="width:100%" action="{{url_for('change_quarantine_status', file_hash=quarantined_file.sha256_hash, hostname=quarantined_file.hostname, username=quarantined_file.username, new_status='Pending')}}" method="POST"><input type="submit" class="btn btn-primary" value="Pending Analysis" onclick="return confirm('Are you sure you want to change the status of {{quarantined_file.file_name}} to Pending Analysis?');"></form></button>
+          </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+      </table><br>
+      <h4><b>Files Pending Analysis:</b></h4>
+      <table class="quarantine" style="width:100%;">
+        <tr>
+          <th style="width:30%;">File Name</th>
+          <th style="width:30%;">Quarantined In</th>
+          <th style="width:15%;">Current Status</th>
+          <th style="width:25%;">Update Status</th>
+        </tr>
+        {% for quarantined_file in quarantined_files %}
+        {% if quarantined_file.file_status == "Pending" %}
+        <tr>
+          <td>{{quarantined_file.file_name}}</td>
+          <td>{{quarantined_file.hostname}} ({{quarantined_file.username}})</td>
+          <td>{{quarantined_file.file_status}}</td>
+          <td>
+              <form action="{{url_for('change_quarantine_status', file_hash=quarantined_file.sha256_hash, hostname=quarantined_file.hostname, username=quarantined_file.username, new_status='Released')}}" method="POST" class="release"><input type="submit" class="btn btn-success" value="Release" onclick="return confirm('Are you sure you want to release {{quarantined_file.file_name}}?');"></form>
+              <form action="{{url_for('change_quarantine_status', file_hash=quarantined_file.sha256_hash, hostname=quarantined_file.hostname, username=quarantined_file.username, new_status='Blacklisted')}}" method="POST" class="blacklist"><input type="submit" class="btn btn-danger" value="Blacklist" onclick="return confirm('Are you sure you want to blacklist {{quarantined_file.file_name}}?');"></form>
+          </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+      </table><br>
+      <h4><b>Released Files:</b></h4>
+      <table class="quarantine" style="width:100%;">
+        <tr>
+          <th>File Name</th>
+          <th>Originally Quarantined In</th>
+        </tr>
+        {% for quarantined_file in quarantined_files %}
+        {% if quarantined_file.file_status == "Released" %}
+        <tr>
+          <td>{{quarantined_file.file_name}}</td>
+          <td>{{quarantined_file.hostname}} ({{quarantined_file.username}})</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+      </table><br>
+      <h4><b>Blacklisted Files:</b></h4>
+      <table class="quarantine" style="width:100%;">
+        <tr>
+          <th>File Name</th>
+          <th>Originally Quarantined In</th>
+        </tr>
+        {% for quarantined_file in quarantined_files %}
+        {% if quarantined_file.file_status == "Blacklisted" %}
+        <tr>
+          <td>{{quarantined_file.file_name}}</td>
+          <td>{{quarantined_file.hostname}} ({{quarantined_file.username}})</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+      </table>
+        </div>
+      </div>
+    </div>
+  </div>
+    <br><br>
+    <div class="display">
+      {% if error %}
+      <p class="error">{{error}}</p>
+      {% endif %}
+    </div>
+    <br>
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+  // Script to open and close sidebar
+  function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+  }
+
+  function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+  }
+
+  </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+
+
+{% endblock %}
