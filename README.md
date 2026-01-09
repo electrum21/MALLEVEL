@@ -29,4 +29,5 @@ Allows for integration with Splunk via HTTP Event Collector (HEC) for live event
 **Server:** Receives files, performs signature/heuristic/ML analysis, and logs results to MongoDB and Splunk.  
 **Heuristics:** Performs static analysis (e.g., entropy checks and anti-debugging detection) to identify suspicious file properties.  
 
-For a detailed report of the project, from ideation to the final product, refer [here](https://github.com/electrum21/MALLEVEL/blob/main/mallevel_readme.md)
+For a detailed report of the project, from ideation to the final product, refer [here](https://github.com/electrum21/MALLEVEL/blob/main/mallevel_readme.md)  
+If you would like to try out this project, click [here](https://mallevel-minimalised.onrender.com/) (Compact Version of Original Project)
